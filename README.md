@@ -10,7 +10,6 @@ Hits a gong when pushing to master.
 * Internet connection (wired or wireless)
 * Gong
 * Servo on GPIO pin 4
-* One LED on GPIO pin 22
 
 ## Optional
 
@@ -27,7 +26,7 @@ Hits a gong when pushing to master.
 3. Once at the command prompt, run `apt get update` and `apt-get upgrade` to update your base system.
 4. Run `apt-get install git`
 5. Clone the repo `git clone git@github.com:josephluck/gonglord.git`
-6. Set up a cron on reboot of the raspberry pi - `sudo crontab -e`. Choose nano as your editor and add the line `@reboot /home/pi/gonglord/startup.sh`. This will instruct the raspberry pi to run gonglord on boot. Add the line `sudo chmod -R 0777 /home/pi/gonglord` to ensure the script is executable. Write out (ctrl + O) and ensure that the cron has been written: `sudo crontab -l`.
+6. Set up a cron on reboot of the raspberry pi - `sudo crontab -e`. Choose nano as your editor and add the line `@reboot /home/pi/gonglord/startup.sh`. This will instruct the raspberry pi to run gonglord on boot. Add the line `sudo chmod -R 0777 /home/pi/gonglord` to ensure the script is executable.
 7. [Install PIGPIO](http://abyz.co.uk/rpi/pigpio/download.html) – this gives us a Python library to easily control the servo.
 8. Install `server.py`'s dependencies: `easy_install web.py`
 9. Try running `sudo python server.py` – it should return the following:
@@ -37,10 +36,10 @@ Hits a gong when pushing to master.
   _
   ```
 
-  If so, your webserver is now running and listening for incoming webhooks. You can test if incoming webhooks are correctly interprereted by running the following from **your machine** (not the Pi):
+  If so, your webserver is now running and listening for incoming webhooks. You can test if incoming webhooks are correctly interprereted by running the following from **your machine**:
 
   ```
-  curl -d '{"ref":"refs/head/master"}' [PI's IP ADDRESS]:8080
+  curl -d '{"ref":"refs/heads/master"}' [PI's IP ADDRESS]:8080
   ```
 
   Your servo should move.
@@ -58,6 +57,6 @@ Note, for this to work you will need to be a paid ngrok user.
 4. Set up pagekite to your credentials: `https://pagekite.net/wiki/Howto/GNULinux/ConfigureYourSystem/`
 5. Test it out!
   ```bash
-    curl -d '{"ref":"refs/head/master"}' [you_kite_name].pagekite.me:8080
+    curl -d '{"ref":"refs/heads/master"}' [you_kite_name].pagekite.me:8080
   ```
 6. Set up your 3rd party service to send webhook requests to your pagekite domain.
